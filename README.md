@@ -96,3 +96,5 @@ src/
 
 1. 从API获取文件列表。
 2. 循环遍历文件列表，**逐个下载文件，并在下载完成后立即解压并删除临时压缩包**。
+
+## [信息处理示例](https://github.com/greenhandzdl/analyse-data-SteamTradingSiteTracker)
