@@ -34,14 +34,21 @@ jobs:
         source .venv/bin/activate
         uv pip install -e .
 
+    - name: Copy .env.example to .env
+      run: cp .env.example .env
+
     - name: Run data crawling script
       run: |
         source .venv/bin/activate
         .venv/bin/python -m steam_tracker.cli
 
+    - name: Get FILE_OUTPUT_PATH from .env
+      id: get_output_path
+      run: echo "FILE_OUTPUT_PATH=$(grep ^FILE_OUTPUT_PATH .env | cut -d= -f2)" >> $GITHUB_ENV
+
     - name: Archive output files
       run: |
-        zip -r output_data.zip ./output
+        zip -r output_data.zip ${{ env.FILE_OUTPUT_PATH }}
 
     - name: Upload output artifact
       uses: actions/upload-artifact@v4

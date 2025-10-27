@@ -78,7 +78,7 @@ src/
 
    根据您的需求修改`.env`文件中的变量:
 
-   - `TMP_OUPUT_PATH`: 下载的临时文件存放路径 (默认为 `./temp`)。
+   - `TMP_OUTPUT_PATH`: 下载的临时文件存放路径 (默认为 `./temp`)。
    - `FILE_OUTPUT_PATH`: 解压后文件的存放路径 (默认为 `./output`)。
    - `REQUEST_PER_SECOND`: **请求频率限制**。每秒最大请求数，用于控制对API的访问频率，避免过载 (默认为 `3`)。
    - `DIR_NAME`: API需要的目标目录名。

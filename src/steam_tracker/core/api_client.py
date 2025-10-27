@@ -3,7 +3,7 @@ import requests
 import time
 import os
 import zipfile
-from steam_tracker.utils.config import DIR_NAME, KEY, TMP_OUPUT_PATH, REQUEST_PER_SECOND, FILE_OUTPUT_PATH
+from steam_tracker.utils.config import DIR_NAME, KEY, TMP_OUTPUT_PATH, REQUEST_PER_SECOND, FILE_OUTPUT_PATH
 
 def get_file_list():
     """获取文件列表"""
@@ -23,7 +23,7 @@ def get_file_list():
 
 def download_files(file_list):
     """下载文件，并立即解压和清理"""
-    os.makedirs(TMP_OUPUT_PATH, exist_ok=True)
+    os.makedirs(TMP_OUTPUT_PATH, exist_ok=True)
     os.makedirs(FILE_OUTPUT_PATH, exist_ok=True)
     for file_name in file_list:
         download_url = f"https://api.iflow.work/export/download?dir_name={DIR_NAME}&file_name={file_name}"
@@ -34,7 +34,7 @@ def download_files(file_list):
             response = requests.get(download_url, stream=True)
             response.raise_for_status()
 
-            file_path = os.path.join(TMP_OUPUT_PATH, file_name)
+            file_path = os.path.join(TMP_OUTPUT_PATH, file_name)
             with open(file_path, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
