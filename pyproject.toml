@@ -1,0 +1,18 @@
+[project]
+name = "crawl-steam-trading-site-tracker"
+version = "0.1.0"
+description = "A Python script to download, unzip, and organize files from an API."
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+dependencies = [
+    "python-dotenv",
+    "requests",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
