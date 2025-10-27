@@ -15,7 +15,29 @@ def get_file_list():
         response.raise_for_status()
         data = response.json()
         if data.get("success") and "files" in data:
-            return data["files"]
+            files = data.get("files") or []
+            # 在返回前，用 FILE_OUTPUT_PATH 目录中的文件与接口返回的 files 去重
+            # 如果目录中存在与返回文件同名（去除扩展名后相同）的文件，则从返回中移除该项
+            try:
+                existing_stems = set()
+                if os.path.isdir(FILE_OUTPUT_PATH):
+                    for ef in os.listdir(FILE_OUTPUT_PATH):
+                        # 只取文件名（不含扩展名）用于比对
+                        stem = os.path.splitext(ef)[0]
+                        existing_stems.add(stem)
+            except Exception as e:
+                print(f"读取本地输出目录 {FILE_OUTPUT_PATH} 时出错: {e}")
+                existing_stems = set()
+
+            filtered = []
+            for fn in files:
+                stem = os.path.splitext(fn)[0]
+                if stem in existing_stems:
+                    print(f"跳过已存在的文件: {fn}（在 {FILE_OUTPUT_PATH} 中找到同名文件）")
+                    continue
+                filtered.append(fn)
+
+            return filtered
         else:
             print(f"获取文件列表失败: {data.get('message', data)}")
             return []
